@@ -11,6 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class GenderPredictionComponent {
   predictionForm: FormGroup;
   predictedGender: string | null = null;
+  loading: boolean = false;  // Add loading state
   months = [
     { value: 1, name: 'January' },
     { value: 2, name: 'February' },
@@ -36,9 +37,21 @@ export class GenderPredictionComponent {
   }
 
   onSubmit(): void {
+    this.loading = true;
     const payload = this.predictionForm.value;
+
     this.genderPredictionService.predictGender(payload).subscribe(response => {
       this.predictedGender = response.predicted_gender === 'M' ? 'Male' : 'Female';
+      this.loading = false;
+    }, error => {
+      console.error("Error occurred:", error);
+      this.loading = false; 
     });
+  }
+
+
+  resetForm(): void {
+    this.predictionForm.reset();
+    this.predictedGender = null;  
   }
 }
