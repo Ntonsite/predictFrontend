@@ -1,0 +1,23 @@
+<div class="container">
+    <h2>Predict Baby's Gender</h2>
+    <form [formGroup]="predictionForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="age">Age</label>
+        <input id="age" type="number" formControlName="age" class="form-control" required>
+      </div>
+  
+      <div class="form-group">
+        <label for="month_of_conception">Month of Conception</label>
+        <select id="month_of_conception" formControlName="month_of_conception" class="form-control" required>
+          <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
+        </select>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Predict Gender</button>
+    </form>
+  
+    <div *ngIf="predictedGender" class="result mt-4">
+      <h4>Predicted Gender: {{ predictedGender }}</h4>
+    </div>
+  </div>
+  

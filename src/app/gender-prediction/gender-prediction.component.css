@@ -1,0 +1,30 @@
+/* src/app/gender-prediction/gender-prediction.component.css */
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .btn-primary {
+    width: 100%;
+  }
+  
+  .result {
+    text-align: center;
+    color: #28a745;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
