@@ -7,11 +7,18 @@
       Loading...
     </div>
   
-    <!-- Hide form while loading -->
-    <form [formGroup]="predictionForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <!-- Form -->
+    <form [formGroup]="predictionForm" (ngSubmit)="onSubmit()" *ngIf="!loading && !predictedGender">
       <div class="form-group">
         <label for="age">Age</label>
         <input id="age" type="number" formControlName="age" class="form-control" required>
+        
+        <!-- Age validation errors -->
+        <div *ngIf="predictionForm.controls['age'].invalid && predictionForm.controls['age'].touched" class="text-danger">
+          <div *ngIf="predictionForm.controls['age'].hasError('required')">Age is required.</div>
+          <div *ngIf="predictionForm.controls['age'].hasError('min')">Age must be at least 18.</div>
+          <div *ngIf="predictionForm.controls['age'].hasError('max')">Age must not exceed 45.</div>
+        </div>
       </div>
   
       <div class="form-group">
@@ -19,14 +26,20 @@
         <select id="month_of_conception" formControlName="month_of_conception" class="form-control" required>
           <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
         </select>
+  
+        <!-- Month of conception validation -->
+        <div *ngIf="predictionForm.controls['month_of_conception'].invalid && predictionForm.controls['month_of_conception'].touched" class="text-danger">
+          Month of conception is required.
+        </div>
       </div>
   
-      <button type="submit" class="btn btn-primary">Predict Gender</button>
+      <button type="submit" class="btn btn-primary" [disabled]="predictionForm.invalid">Predict Gender</button>
     </form>
-
+  
+    <!-- Display predicted gender and the "Start Again" button after response -->
     <div *ngIf="predictedGender && !loading" class="result mt-4">
-        <h4>Predicted Gender: {{ predictedGender }}</h4>
-        <button (click)="resetForm()" class="btn btn-secondary mt-3">Start Again</button>
+      <h4>Predicted Gender: {{ predictedGender }}</h4>
+      <button (click)="resetForm()" class="btn btn-secondary mt-3">Start Again</button>
     </div>
   </div>
   

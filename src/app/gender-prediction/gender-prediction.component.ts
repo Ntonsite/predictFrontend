@@ -1,7 +1,7 @@
 // src/app/gender-prediction/gender-prediction.component.ts
 import { Component } from '@angular/core';
 import { GenderPredictionService } from '../gender-prediction.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'; // Import Validators
 
 @Component({
   selector: 'app-gender-prediction',
@@ -11,32 +11,39 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class GenderPredictionComponent {
   predictionForm: FormGroup;
   predictedGender: string | null = null;
-  loading: boolean = false;  // Add loading state
-  months = [
-    { value: 1, name: 'January' },
-    { value: 2, name: 'February' },
-    { value: 3, name: 'March' },
-    { value: 4, name: 'April' },
-    { value: 5, name: 'May' },
-    { value: 6, name: 'June' },
-    { value: 7, name: 'July' },
-    { value: 8, name: 'August' },
-    { value: 9, name: 'September' },
-    { value: 10, name: 'October' },
-    { value: 11, name: 'November' },
-    { value: 12, name: 'December' }
-  ];
+  loading: boolean = false;
+  // Add this to the GenderPredictionComponent (above the constructor)
+months = [
+  { value: 1, name: 'January' },
+  { value: 2, name: 'February' },
+  { value: 3, name: 'March' },
+  { value: 4, name: 'April' },
+  { value: 5, name: 'May' },
+  { value: 6, name: 'June' },
+  { value: 7, name: 'July' },
+  { value: 8, name: 'August' },
+  { value: 9, name: 'September' },
+  { value: 10, name: 'October' },
+  { value: 11, name: 'November' },
+  { value: 12, name: 'December' }
+];
+
   constructor(
     private genderPredictionService: GenderPredictionService,
     private formBuilder: FormBuilder
   ) {
+    // Add Validators for the age control (18-45 inclusive)
     this.predictionForm = this.formBuilder.group({
-      age: '',
-      month_of_conception: ''
+      age: ['', [Validators.required, Validators.min(18), Validators.max(45)]],
+      month_of_conception: ['', Validators.required]
     });
   }
 
   onSubmit(): void {
+    if (this.predictionForm.invalid) {
+      return; // Prevent submission if form is invalid
+    }
+
     this.loading = true;
     const payload = this.predictionForm.value;
 
@@ -45,13 +52,12 @@ export class GenderPredictionComponent {
       this.loading = false;
     }, error => {
       console.error("Error occurred:", error);
-      this.loading = false; 
+      this.loading = false;
     });
   }
 
-
   resetForm(): void {
     this.predictionForm.reset();
-    this.predictedGender = null;  
+    this.predictedGender = null;
   }
 }
