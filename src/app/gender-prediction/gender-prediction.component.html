@@ -10,7 +10,7 @@
     <!-- Form -->
     <form [formGroup]="predictionForm" (ngSubmit)="onSubmit()" *ngIf="!loading && !predictedGender">
       <div class="form-group">
-        <label for="age">Age</label>
+        <label for="age">Age of Mother time of conceiving:</label>
         <input id="age" type="number" formControlName="age" class="form-control" required>
         
         <!-- Age validation errors -->
