@@ -19,7 +19,7 @@ interface GenderPredictionResponse {
 })
 export class GenderPredictionService {
 
-  private apiUrl = 'http://13.60.223.84:8888/gender';
+  private apiUrl = 'http://51.20.91.167:8888/gender';
 
   constructor(private http: HttpClient) { }
 
