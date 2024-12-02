@@ -1,8 +1,9 @@
 version: "3.3"
 services:
-  image: gender-app:latest
-  build:
-    context: .
-    dockerfile: Dockerfile
-  ports:
-    - "4200:80"
+  web-app:
+    image: genderpredict:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
